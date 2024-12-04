@@ -6,6 +6,15 @@
 
 This starter is based on Vite. There is also [a Webpack based starter](https://github.com/keycloakify/keycloakify-starter-webpack).
 
+# Commands
+yarn install
+npx keycloakify add-story
+select login.ftl
+yarn storybook
+yarn add @mui/material @emotion/react @emotion/styled
+npx keycloakify eject-page
+yarn build-keycloak-theme
+
 # Quick start
 
 ```bash
