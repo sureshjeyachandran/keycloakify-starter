@@ -236,6 +236,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         </InputAdornment>
                                         }
                                         label="Password"
+                                        name="password"
                                         error={messagesPerField.existsError("username", "password")}
                                     />
                                 </FormControl>
