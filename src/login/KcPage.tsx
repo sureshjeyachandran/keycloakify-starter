@@ -9,6 +9,8 @@ const UserProfileFormFields = lazy(
 );
 
 const Login = lazy(() => import("./pages/Login"));
+const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
+const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword"));
 
 const doMakeUserConfirmPassword = true;
 
@@ -22,24 +24,37 @@ export default function KcPage(props: { kcContext: KcContext }) {
             {(() => {
                 switch (kcContext.pageId) {
                     case "login.ftl": return (
-                            <Login
-                                {...{ kcContext, i18n, classes }}
-                                Template={Template}
-                                doUseDefaultCss={true}
-                            />
-                        );
-                    default:
-                        return (
-                            <DefaultPage
-                                kcContext={kcContext}
-                                i18n={i18n}
-                                classes={classes}
-                                Template={Template}
-                                doUseDefaultCss={true}
-                                UserProfileFormFields={UserProfileFormFields}
-                                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                            />
-                        );
+                        <Login
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-reset-password.ftl": return (
+                        <LoginResetPassword
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-update-password.ftl": return (
+                        <LoginUpdatePassword
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    default: return (
+                        <DefaultPage
+                            kcContext={kcContext}
+                            i18n={i18n}
+                            classes={classes}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                            UserProfileFormFields={UserProfileFormFields}
+                            doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                        />
+                    );
                 }
             })()}
         </Suspense>

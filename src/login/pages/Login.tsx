@@ -36,7 +36,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
     const { realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField } = kcContext;
 
-    const { msg } = i18n;
+    const { msg,msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
 
@@ -46,15 +46,15 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
     const [showPassword, setShowPassword] = useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
 
-  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+    const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
 
     return (
         <Template
@@ -216,7 +216,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     error={messagesPerField.existsError("username", "password")}
                                 /> */}
                                 <FormControl sx={{ marginTop: 1 }} fullWidth variant="outlined">
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <InputLabel htmlFor="outlined-adornment-password">{msg("password")}</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
                                         type={showPassword ? 'text' : 'password'}
@@ -255,13 +255,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         {realm.rememberMe && !usernameHidden && (
                                             <FormControlLabel
                                                 control={<Checkbox name="rememberMe" />}
-                                                label="Remember me"
+                                                label={msg("rememberMe")}
                                             />
                                         )}
 
                                         {realm.resetPasswordAllowed && (
                                             <Link href={url.loginResetCredentialsUrl} underline="hover" sx={{marginBottom: 1}}>
-                                                Forgot password?
+                                                {msg("doForgotPassword")}
                                             </Link>
                                         )}
                                     </Box>
@@ -318,7 +318,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     },
                                     }}
                                 >
-                                    Login
+                                    {msgStr("doLogIn")}
                                 </Button>
                             </div>
                         </form>
