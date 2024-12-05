@@ -260,7 +260,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         )}
 
                                         {realm.resetPasswordAllowed && (
-                                            <Link href="#" underline="hover" sx={{marginBottom: 1}}>
+                                            <Link href={url.loginResetCredentialsUrl} underline="hover" sx={{marginBottom: 1}}>
                                                 Forgot password?
                                             </Link>
                                         )}
