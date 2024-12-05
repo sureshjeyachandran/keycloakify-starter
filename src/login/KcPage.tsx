@@ -11,6 +11,10 @@ const UserProfileFormFields = lazy(
 const Login = lazy(() => import("./pages/Login"));
 const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword"));
+const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
+const LoginResetOtp = lazy(() => import("./pages/LoginResetOtp"));
+const LoginOtp = lazy(() => import("./pages/LoginOtp"));
+const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp"));
 
 const doMakeUserConfirmPassword = true;
 
@@ -39,6 +43,34 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     );
                     case "login-update-password.ftl": return (
                         <LoginUpdatePassword
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-verify-email.ftl": return (
+                        <LoginVerifyEmail
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-reset-otp.ftl": return (
+                        <LoginResetOtp
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-otp.ftl": return (
+                        <LoginOtp
+                            {...{ kcContext, i18n, classes }}
+                            Template={Template}
+                            doUseDefaultCss={true}
+                        />
+                    );
+                    case "login-config-totp.ftl": return (
+                        <LoginConfigTotp
                             {...{ kcContext, i18n, classes }}
                             Template={Template}
                             doUseDefaultCss={true}
