@@ -249,6 +249,8 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         helperText={messagesPerField.get("totp")}
                         sx={{marginTop: 0}}
                     />
+                    <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
+                    {mode && <input type="hidden" id="mode" value={mode} />}
 
 {/*                     <div className={kcClsx("kcFormGroupClass")}>
                         <div className={kcClsx("kcInputWrapperClass")}>
