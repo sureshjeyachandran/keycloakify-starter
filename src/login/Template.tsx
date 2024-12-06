@@ -86,7 +86,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             sx={{
               width: 800,
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "10px",
+              borderRadius: "30px",
               overflow: "hidden",
               backgroundColor: "white",
             }}
@@ -101,6 +101,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 color: "white",
                 textAlign: "center",
                 padding: "40px",
+                borderRadius: "40px",
               }}
             >
               <Typography variant="h4" fontWeight="bold" gutterBottom>
