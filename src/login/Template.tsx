@@ -187,7 +187,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         {(() => {
                             const node =
                             !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
-                                <Typography variant="h5" sx={{ marginTop: "40px" }}>
+                                <Typography variant="h5" sx={{ marginTop: "40px", color:"#802b86",fontWeight: "bold" }}>
                                     {headerNode}
                                 </Typography>
                             ) : (
