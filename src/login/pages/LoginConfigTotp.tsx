@@ -26,7 +26,10 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
             headerNode={msg("loginTotpTitle")}
             displayMessage={!messagesPerField.existsError("totp", "userLabel")}
         >
-            <>
+            <Box sx={{                                       
+                textAlign: "left", // Ensures text aligns to the left
+                direction: "ltr",  // Ensures the text direction is left-to-right
+            }}>
 {/*                 <ol id="kc-totp-settings">
                     <li>
                         <p>{msg("loginTotpStep1")}</p>
@@ -106,13 +109,13 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                     ))}
                 </List> */}
                 {totp.supportedApplications.map(app => (       
-                    <Typography key={app} variant="subtitle1" gutterBottom sx={{marginLeft: 1}}>
+                    <Typography key={app} variant="subtitle1" gutterBottom sx={{marginLeft: 2, fontWeight: 'bold'}}>
                         {advancedMsg(app)}
                     </Typography>
                 ))}
                 
-                {mode != "manual" ? (
-                    <>
+                {mode == "manual" ? (
+                    <Box>
                         
                             {/* <p>{msg("loginTotpManualStep2")}</p> */}
                             <Typography variant="subtitle1" gutterBottom>
@@ -133,7 +136,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                 {msg("loginTotpScanBarcode")}
                             </Link>
                         
-                        <li>
+                        
                             {/* <p>{msg("loginTotpManualStep3")}</p> */}
                             <Typography variant="subtitle1" gutterBottom>
                                 3. {msg("loginTotpManualStep3")}
@@ -167,8 +170,8 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                     </Typography>
                                 )}
                             </ul>
-                        </li>
-                    </>
+                        
+                    </Box>
                 ) : (
                     <Box>
                         <Typography variant="subtitle1" gutterBottom>
@@ -193,7 +196,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                 )}
 
                 <Typography variant="subtitle1" gutterBottom>
-                    3. {msg("loginTotpStep3")}
+                    {(mode == "manual"? "4. " : "3. ")}{msg("loginTotpStep3")}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
                     {msg("loginTotpStep3DeviceName")}
@@ -232,7 +235,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
                         {mode && <input type="hidden" id="mode" value={mode} />}
                     </div> */}
-                                        <TextField
+                    <TextField
                         id="totp"
                         name="totp"
                         //defaultValue={login.username ?? ""}
@@ -244,6 +247,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         margin="normal"
                         error={messagesPerField.existsError("totp")}
                         helperText={messagesPerField.get("totp")}
+                        sx={{marginTop: 0}}
                     />
 
 {/*                     <div className={kcClsx("kcFormGroupClass")}>
@@ -362,7 +366,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         </Button>
                     )}
                 </form>
-            </>
+            </Box>
         </Template>
     );
 }

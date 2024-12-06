@@ -29,7 +29,11 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
             }
         >
             {/* <p className="instruction">{msg("emailVerifyInstruction1", user?.email ?? "")}</p> */}
-            <Typography sx={{ marginBottom: "10px"}}>
+            <Typography sx={{ marginBottom: "10px", 
+                textAlign: "left", // Ensures text aligns to the left
+                direction: "ltr",  // Ensures the text direction is left-to-right
+                marginLeft: "16px",
+            }}>
                 {msg("emailVerifyInstruction1", user?.email ?? "")}
             </Typography>
         </Template>

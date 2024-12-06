@@ -1,22 +1,41 @@
 import { useEffect } from "react";
 //import { clsx } from "keycloakify/tools/clsx";
-//import { kcSanitize } from "keycloakify/lib/kcSanitize";
+import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
-import { Box, Grid, Typography } from "@mui/material";
+import { Alert, Box, Grid, Link, Paper, Typography } from "@mui/material";
+import WarningIcon from '@mui/icons-material/Warning';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import ErrorIcon from '@mui/icons-material/Error';
+import InfoIcon from '@mui/icons-material/Info';
+
+const renderIcon = (messageType: string) => {
+    switch (messageType) {
+      case "success":
+        return <DoneAllIcon />;
+      case "warning":
+        return <WarningIcon />;
+      case "error":
+        return <ErrorIcon />;
+      case "info":
+        return <InfoIcon />;
+      default:
+        return null;
+    }
+  };
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
-        /* displayInfo = false,
+        displayInfo = false,
         displayMessage = true,
-        displayRequiredFields = false,
+        //displayRequiredFields = false,
         headerNode,
         socialProvidersNode = null,
-        infoNode = null, */
+        infoNode = null,
         documentTitle,
         bodyClassName,
         kcContext,
@@ -28,11 +47,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
-    //const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;
+    const { msg, msgStr } = i18n;
 
-    const { msgStr } = i18n;
-
-    //const { realm, auth, url, message, isAppInitiatedAction } = kcContext;
+    const {  auth, url, message, isAppInitiatedAction } = kcContext;
 
     useEffect(() => {
         document.title = documentTitle ?? msgStr("loginTitle", kcContext.realm.displayName);
@@ -116,13 +133,199 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
               xs={12}
               sm={6}
               sx={{
-                padding: "40px",
+                padding: "10px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
               }}
             >
-              {children}
+
+                {/* <div className={kcClsx("kcLoginClass")} > */}
+                <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        width: "100%",
+                        marginBottom: "16px",
+                }}>
+                    {/* <div>
+                        
+                        {(() => {
+                            const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials ) ? (
+                                
+                                <Typography variant="h5" sx={{ marginBottom: "0px" }}>
+                                    {headerNode}
+                                </Typography>
+                            ) : (
+                                <div id="kc-username" className={kcClsx("kcFormGroupClass")}>
+                                    <label id="kc-attempted-username">{auth.attemptedUsername}</label>
+                                    <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
+                                        <div className="kc-login-tooltip">
+                                            <i className={kcClsx("kcResetFlowIcon")}></i>
+                                            <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            );
+                            return node;
+                        })()}
+                    </div> */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            textAlign: "center",
+                            width: "100%",
+                            marginBottom: "16px",
+                        }}
+                        >
+                        {(() => {
+                            const node =
+                            !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
+                                <Typography variant="h5" sx={{ marginTop: "40px" }}>
+                                    {headerNode}
+                                </Typography>
+                            ) : (
+                                <Box
+                                id="kc-username"
+                                className={kcClsx("kcFormGroupClass")}
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                                >
+                                    <Typography id="kc-attempted-username" variant="body1">
+                                        {auth?.attemptedUsername}
+                                    </Typography>
+                                    <Link
+                                        id="reset-login"
+                                        href={url.loginRestartFlowUrl}
+                                        aria-label={msgStr("restartLoginTooltip")}
+                                        sx={{ display: "flex", alignItems: "center", textDecoration: "none" }}
+                                    >
+                                        <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "8px",
+                                        }}
+                                        >
+                                            <i className={kcClsx("kcResetFlowIcon")}></i>
+                                            <Typography variant="body2" sx={{ color: "inherit" }}>
+                                                {msg("restartLoginTooltip")}
+                                            </Typography>
+                                        </Box>
+                                    </Link>
+                                </Box>
+                            );
+                            return node;
+                        })()}
+                    </Box>
+                    <div id="kc-content">
+                        <div id="kc-content-wrapper">
+                            
+                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                                
+                                <Alert
+                                    severity={message.type}
+                                    icon={renderIcon(message.type)}
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        mb: 2,
+                                        bgcolor:
+                                        message.type === "error"
+                                            ? "#fdecea"
+                                            : message.type === "success"
+                                            ? "#edf7ed"
+                                            : message.type === "warning"
+                                            ? "#fff4e5"
+                                            : "#e7f3fe",
+                                    }}
+                                >
+                                    {/* <AlertTitle sx={{ textTransform: "capitalize" }}>{message.type}</AlertTitle> */}
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                        color: message.type === "error" ? "#d32f2f" : "inherit",
+                                        textAlign: "left", // Ensures text aligns to the left
+                                        direction: "ltr",  // Ensures the text direction is left-to-right
+                                        
+                                        }}
+                                    >
+                                        {kcSanitize(message.summary)}
+                                    </Typography>
+                                </Alert>
+                            )}
+                            {children}
+                            {auth !== undefined && auth.showTryAnotherWayLink && (
+                                <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
+                                    <div className={kcClsx("kcFormGroupClass")}>
+                                        <input type="hidden" name="tryAnotherWay" value="on" />
+                                        <a
+                                            href="#"
+                                            id="try-another-way"
+                                            onClick={() => {
+                                                document.forms["kc-select-try-another-way-form" as never].submit();
+                                                return false;
+                                            }}
+                                        >
+                                            {msg("doTryAnotherWay")}
+                                        </a>
+                                    </div>
+                                </form>
+                            )}
+                            {socialProvidersNode}
+                            {/* {displayInfo && (
+                                <div id="kc-info" className={kcClsx("kcSignUpClass")}>
+                                    <div id="kc-info-wrapper" className={kcClsx("kcInfoAreaWrapperClass")}>
+                                        {infoNode}
+                                    </div>
+                                </div>
+                            )} */}
+                            {displayInfo && infoNode && (
+                                <Box
+                                    id="kc-info"
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        //width: "100%",
+                                        //marginLeft: "16px",
+                                        padding: "40px",
+                                    }}
+                                    >
+                                    <Paper
+                                        id="kc-info-wrapper"
+                                        elevation={3}
+                                        sx={{
+                                        padding: "16px",
+                                        backgroundColor: "#f5f5f5",
+                                        borderRadius: 2,
+                                        maxWidth: "600px",
+                                        width: "100%",
+                                        }}
+                                    >
+                                        <Typography variant="body1" color="textPrimary" sx={{
+                                            textAlign: "left", // Ensures text aligns to the left
+                                            direction: "ltr",  // Ensures the text direction is left-to-right
+                                        }}>
+                                            {infoNode}
+                                        </Typography>
+                                    </Paper>
+                                </Box>
+                            )}
+                        </div>
+                    </div>
+                </Box>
+                {/* </div> */}
+
             </Grid>
           </Grid>
         </Box>
